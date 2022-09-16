@@ -26,8 +26,9 @@ app.post('/checkups', (req, res) => {
         lowerRange: req.body.lowerRange,
         upperRange: req.body.upperRange
     }
+    console.log(newCheckup)
     fs.writeFileSync('./data/checkups.json', JSON.stringify(newCheckup));
-
+    return newCheckup
 }
 )
 
@@ -43,6 +44,24 @@ app.get('/medications', (req, res) => {
 app.get('/schedule', (req, res) => {
     res.send(schedule)
 })
+
+
+app.post('/schedule', (req, res) => {
+    const newSchedule = {
+        Monday: req.body.Monday,
+        Tuesday: req.body.Tuesday,
+        Wednesday: req.body.Wednesday,
+        Thursday: req.body.Thursday,
+        Friday: req.body.Friday,
+        Saturday: req.body.Saturday,
+        Sunday: req.body.Sunday
+
+    }
+    console.log(req.body)
+    fs.writeFileSync('./data/schedule.json', JSON.stringify(newSchedule));
+}
+)
+
 //listener
 app.listen(PORT, () => {
     console.log("We are live!")
