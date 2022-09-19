@@ -26,9 +26,8 @@ app.post('/checkups', (req, res) => {
         lowerRange: req.body.lowerRange,
         upperRange: req.body.upperRange
     }
-    console.log(newCheckup)
     fs.writeFileSync('./data/checkups.json', JSON.stringify(newCheckup));
-    return newCheckup
+    res.json(newCheckup)
 }
 )
 
@@ -55,10 +54,10 @@ app.post('/schedule', (req, res) => {
         Friday: req.body.Friday,
         Saturday: req.body.Saturday,
         Sunday: req.body.Sunday
-
     }
-    console.log(req.body)
     fs.writeFileSync('./data/schedule.json', JSON.stringify(newSchedule));
+    res.json(newSchedule)
+
 }
 )
 
