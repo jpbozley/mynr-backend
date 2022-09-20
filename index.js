@@ -4,9 +4,6 @@ const fs = require("fs");
 const cors = require("cors");
 require("dotenv").config();
 const { PORT, BACKEND_URL } = process.env;
-const checkups = require('./data/checkups.json')
-const medications = require('./data/medications.json')
-const schedule = require('./data/schedule.json')
 
 //cors middleware
 app.use(cors());
@@ -16,6 +13,7 @@ app.use(express.json());
 
 //checkups
 app.get('/checkups', (req, res) => {
+    let checkups = fs.readFileSync('./data/checkups.json')
     res.send(checkups)
 });
 
@@ -35,12 +33,14 @@ app.post('/checkups', (req, res) => {
 
 //medications
 app.get('/medications', (req, res) => {
+    let medications = fs.readFileSync('./data/medications.json')
     res.send(medications)
 });
 
 
 //schedule
 app.get('/schedule', (req, res) => {
+    let schedule = fs.readFileSync('./data/schedule.json')
     res.send(schedule)
 })
 
