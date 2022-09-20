@@ -38,6 +38,14 @@ app.get('/medications', (req, res) => {
     res.send(medications)
 });
 
+app.post('/medications', (req, res) => {
+    const newMedication = {
+        name: req.body.name,
+        dose: req.body.dose
+    }
+    fs.writeFileSync('./data/medications.json', JSON.stringify(newMedication));
+    res.json(newMedication)
+})
 
 //schedule
 app.get('/schedule', (req, res) => {
