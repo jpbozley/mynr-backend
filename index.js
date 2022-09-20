@@ -20,6 +20,7 @@ app.get('/checkups', (req, res) => {
 app.post('/checkups', (req, res) => {
     const newCheckup = {
         date: req.body.date,
+        dateNext: req.body.dateNext,
         reading: req.body.reading,
         lowerRange: req.body.lowerRange,
         upperRange: req.body.upperRange
