@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const cors = require("cors");
+const { stringify } = require("querystring");
 require("dotenv").config();
 const { PORT, BACKEND_URL } = process.env;
 
@@ -33,6 +34,8 @@ app.post('/checkups', (req, res) => {
 
 
 //medications
+
+
 app.get('/medications', (req, res) => {
     let medications = fs.readFileSync('./data/medications.json')
     res.send(medications)
@@ -43,8 +46,9 @@ app.post('/medications', (req, res) => {
         name: req.body.name,
         dose: req.body.dose
     }
-    fs.writeFileSync('./data/medications.json', JSON.stringify(newMedication));
-    res.json(newMedication)
+    let medications = JSON.parse(fs.readFileSync('./data/medications.json'))
+    const newData = [...medications, newMedication]
+    fs.writeFileSync('./data/medications.json', JSON.stringify(newData));
 })
 
 //schedule
