@@ -5,6 +5,8 @@ const cors = require("cors");
 const { stringify } = require("querystring");
 require("dotenv").config();
 const { PORT, BACKEND_URL } = process.env;
+const { v4: uuidv4 } = require('uuid');
+const { arrayBuffer } = require("stream/consumers");
 
 //cors middleware
 app.use(cors());
@@ -44,11 +46,21 @@ app.get('/medications', (req, res) => {
 app.post('/medications', (req, res) => {
     const newMedication = {
         name: req.body.name,
-        dose: req.body.dose
+        dose: req.body.dose,
+        id: uuidv4()
     }
     let medications = JSON.parse(fs.readFileSync('./data/medications.json'))
     const newData = [...medications, newMedication]
     fs.writeFileSync('./data/medications.json', JSON.stringify(newData));
+    res.send(medications)
+})
+
+
+app.delete('/medications/:id', (req, res) => {
+    let medications = JSON.parse(fs.readFileSync('./data/medications.json'))
+    const afterDelete = medications.filter(medication => medication.id !== req.params.id)
+    fs.writeFileSync('./data/medications.json', JSON.stringify(afterDelete))
+    res.send(medications)
 })
 
 //schedule
